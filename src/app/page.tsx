@@ -1,91 +1,63 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
+'use client' 
 
-const inter = Inter({ subsets: ['latin'] })
+import Image from 'next/image'
+import {Inter} from '@next/font/google'
+import Footer from './footer'
+import styles from './page.module.css'
+import Link from 'next/link'
+import About from './about'
+import Contact from './contact'
+import React from 'react'
+import Logo from './Logo'
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+    const [showAbout, setShowAbout] = React.useState(false)
+    const [showContact, setShowContact] = React.useState(false)
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+    const handleClose = () => {
+        setShowAbout(false)
+        setShowContact(false)
+    }
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
+    return (
+        <>
+        <main className={
+            styles.main
+        }>
+            <Logo/>
+            <Image priority className='astro' src="/astronaut.png"
+                width={200}
+                height={200}
+                alt={'Astronaut on Mars'}/>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+            <span className={styles.typewriter}>Fast, Web, App, Development</span>
+            <input type='button' className={styles.grow + ' water-button'}
+                onClick={
+                    () => {
+                        setShowAbout(!showAbout)
+                    }
+                }
+                value={'About'}/> {
+            showAbout && <About showAbout={showAbout}
+                onUpdate={handleClose}/>
+        }
+
+            <Link href={'https://blog.milysec.com'} target="_blank">
+                <input type='button' className={styles.grow +' water-button'}
+                    value={'Blog'}/>
+            </Link>
+
+            <input type='button' className={styles.grow +' water-button'}
+                onClick={
+                    () => setShowContact(!showContact)
+                }
+                value={'Contact'}/> {
+            showContact && <Contact showContact={showContact}
+                onUpdate={handleClose}/>
+        } 
+        <Footer/>
+        </main>
+        </>
+    )
 }
